@@ -1,28 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Trabalho de Visão Computacional e Realidade Misturada
 
-## Available Scripts
+### Alunos:
 
-Install packages:
+`André Fonseca de Paiva`
+
+`Luiz Felipe Sargaço`
+
+### Professor:
+
+`Will Ricardo Machado`
+
+<hr/>
+
+Este projeto foi inicializado com [Create React App](https://github.com/facebook/create-react-app).
+
+## Scripts Disponíveis
+
+Instalar pacotes:
 
 ### `npm install`
 
-In the project directory, you can run:
+No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Executa o aplicativo no modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no navegador.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A página será recarregada quando você fizer edições.\
+Você também verá quaisquer erros de lint no console.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Compila o aplicativo para produção na pasta `build`.\
+Ele agrupa corretamente o React no modo de produção e otimiza a compilação para obter o melhor desempenho.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A compilação é minificada e os nomes dos arquivos incluem os hashes.\
+Seu aplicativo está pronto para ser implantado!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
+Consulte a seção sobre [implantação](https://facebook.github.io/create-react-app/docs/deployment) para mais informações.
