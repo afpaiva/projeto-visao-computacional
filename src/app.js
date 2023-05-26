@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initCamera, pose } from "./pose";
 import VideoCanvas from "./components/videoCanvas";
 import { createDetector } from "./pose";
+import Game from "./components/game";
 
 const App = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
   const config = {
     video: { width: 640, height: 480, fps: 30 },
   };
@@ -14,7 +17,7 @@ const App = () => {
         video.play();
         video.addEventListener(
           "loadeddata",
-          async (event) => await pose(createDetector)
+          async (event) => await pose(createDetector, setPosition)
         );
       }
     );
@@ -26,7 +29,7 @@ const App = () => {
         canvasWidth={config.video.width}
         canvasHeight={config.video.height}
       />
-
+      <Game x={position.x} y={position.y} />
       <div className="debug">
         <h2>Mão Esquerda</h2>
         <table id="summary-left" className="summary">
