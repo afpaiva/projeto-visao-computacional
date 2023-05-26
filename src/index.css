@@ -5,23 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-/*----*/
-
-.container {
-  margin: 20px auto;
-  display: flex;
-}
-
-.video,
-.debug {
-  padding: 0 20px;
+  background-color: black;
+  color: white;
 }
 
 table.summary {
@@ -35,22 +20,18 @@ table.summary th {
   padding: 5px 8px;
 }
 
-#video-container {
-  width: 640px;
-  height: 480px;
-  position: relative;
-}
-
 .layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+}
+
+.video{
+  position: absolute;
 }
 
 #pose-video {
   transform: scaleX(-1);
+  object-position: top;
+  opacity: .05;
 }
 
 .pose-result {

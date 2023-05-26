@@ -11,7 +11,7 @@ const Cursor = styled.div`
 `;
 
 const Game = ({ x, y }) => {
-  return <Cursor x={x.toFixed(2)*3} y={y.toFixed(2)*3} />;
+  return <Cursor x={x.toFixed(2)} y={y.toFixed(2)} />;
 };
 
 export default Game;

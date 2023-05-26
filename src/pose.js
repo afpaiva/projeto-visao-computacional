@@ -3,17 +3,13 @@ import { VictoryGesture, ThumbsUpGesture } from "fingerpose/src/gestures";
 import * as handpose from "@tensorflow-models/hand-pose-detection";
 import "@mediapipe/hands";
 
-const config = {
-  video: { width: 640, height: 480, fps: 30 },
-};
-
 const landmarkColors = {
-  thumb: "red",
-  index: "blue",
-  middle: "yellow",
-  ring: "green",
-  pinky: "pink",
-  wrist: "white",
+  thumb: "#00aa77",
+  index: "#00aa77",
+  middle: "#00aa77",
+  ring: "#00aa77",
+  pinky: "#00aa77",
+  wrist: "#00aa77",
 };
 
 const gestureStrings = {
@@ -31,8 +27,8 @@ export async function createDetector() {
   });
 }
 
-export async function pose(createDet, setPosition) {
-
+export async function pose(createDetector, setPosition, size, fps) {
+  const { width, height } = size;
   const video = document.querySelector("#pose-video");
   const canvas = document.querySelector("#pose-canvas");
   const ctx = canvas.getContext("2d");
@@ -41,29 +37,34 @@ export async function pose(createDet, setPosition) {
     right: document.querySelector("#pose-result-right"),
     left: document.querySelector("#pose-result-left"),
   };
+
   // configure gesture estimator
-  // add "✌🏻" and "👍" as sample gestures
   const knownGestures = [VictoryGesture, ThumbsUpGesture];
   const GE = new GestureEstimator(knownGestures);
+
   // load handpose model
-  const detector = await createDet();
+  const detector = await createDetector();
   console.log("mediaPose model loaded");
 
   // main estimation loop
   const estimateHands = async () => {
     // clear canvas overlay
-    ctx.clearRect(0, 0, config.video.width, config.video.height);
-    resultLayer.right.innerText = "";
-    resultLayer.left.innerText = "";
+    ctx.clearRect(0, 0, width, height);
+
+    if (!!resultLayer.right) {
+      resultLayer.right.innerText = "";
+      resultLayer.left.innerText = "";
+    }
 
     // get hand landmarks from video
     const hands = await detector.estimateHands(video, {
       flipHorizontal: true,
     });
     if (!!hands[0]) {
+      const cursorPoint = 8;
       setPosition({
-        x: hands[0].keypoints[0].x,
-        y: hands[0].keypoints[0].y,
+        x: (hands[0].keypoints[cursorPoint].x * width) / 640,
+        y: (hands[0].keypoints[cursorPoint].y * height) / 480,
       });
     }
 
@@ -71,7 +72,13 @@ export async function pose(createDet, setPosition) {
       for (const keypoint of hand.keypoints) {
         const name = keypoint.name.split("_")[0].toString().toLowerCase();
         const color = landmarkColors[name];
-        drawPoint(ctx, keypoint.x, keypoint.y, 3, color);
+        drawPoint(
+          ctx,
+          ((keypoint.x * width) / 640),
+          (keypoint.y * height) / 480,
+          3,
+          color
+        );
       }
 
       const est = GE.estimate(hand.keypoints3D, 9);
@@ -85,17 +92,18 @@ export async function pose(createDet, setPosition) {
         updateDebugInfo(est.poseData, chosenHand);
       }
     }
-    // ...and so on
+
     setTimeout(() => {
       estimateHands();
-    }, 1000 / config.video.fps);
+    }, 1000 / fps);
   };
 
   estimateHands();
   console.log("Starting predictions");
 }
 
-export async function initCamera(width, height, fps) {
+export async function initCamera(size, fps) {
+  const { width, height } = size;
   const constraints = {
     audio: false,
     video: {
