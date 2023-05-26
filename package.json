@@ -2,6 +2,7 @@
   "name": "visao-proj",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://afpaiva.github.io/projeto-visao-computacional/",
   "dependencies": {
     "@mediapipe/hands": "^0.4.1675469240",
     "@tensorflow-models/hand-pose-detection": "^2.0.0",
