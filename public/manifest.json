@@ -1,0 +1,16 @@
+{
+  "name": "Controle de Navegador com Visão Computacional",
+  "version": "1.0",
+  "description": "Controle de Navegador com Visão Computacional",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://unpkg.com; object-src 'self'"
+  }
+}
