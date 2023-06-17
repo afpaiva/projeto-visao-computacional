@@ -1,4 +1,4 @@
-export function triggerClickAtPosition(x, y) {
+export const triggerClickAtPosition = (x, y) => {
   const element = document.elementFromPoint(x, y);
 
   if (element) {

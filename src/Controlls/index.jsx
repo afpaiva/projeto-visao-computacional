@@ -4,6 +4,7 @@ import "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
 import "@mediapipe/hands";
 import { Canvas, Video } from "./styles";
+import { triggerClickAtPosition } from "./mouseControlls";
 
 const Controlls = ({ setControllerValues }) => {
   const videoRef = useRef(null);
@@ -30,6 +31,7 @@ const Controlls = ({ setControllerValues }) => {
       const video = videoRef.current;
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
+      ctx.imageSmoothingEnabled = false;
 
       const constraints = { audio: false, video: true };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -136,7 +138,8 @@ const Controlls = ({ setControllerValues }) => {
           }
 
           // Draw circle contour
-          ctx.strokeStyle = "#00ff00";
+          let click = diameter < 50;
+          ctx.strokeStyle = click ? "#ff0000" : "#00ff00";
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
@@ -162,13 +165,17 @@ const Controlls = ({ setControllerValues }) => {
           }
 
           // setState circle midpoint coordinates
-          console.log("Circle Midpoint (x, y):", Math.abs(centerX - canvas.width), centerY);
-          console.log("Circle Diameter:", diameter);
+          let posX = Math.abs(centerX - canvas.width);
+          let posY = centerY;
           setControllerValues({
-            x: Math.abs(centerX - canvas.width),
-            y: centerY,
-            click: diameter < 20,
+            x: posX,
+            y: posY,
+            click,
           })
+
+          if (click) {
+            triggerClickAtPosition(posX, posY);
+          }
         }
 
         requestAnimationFrame(estimateHands);
